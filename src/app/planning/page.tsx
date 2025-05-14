@@ -1,6 +1,5 @@
 "use client";
 
-import NextImage from "@/components/NextImage";
 import Typography from "@/components/Typography";
 import Button from "@/components/buttons/Button";
 import { Plus, Search } from "lucide-react";
@@ -103,16 +102,14 @@ export default function PlanningKelas() {
             )}
 
             {/* Create New Class Button */}
-            <div className="">
-              <Button
-                variant="slate"
-                leftIcon={Plus}
-                leftIconClassName="h-5 w-5"
-                className="flex w-full h-full justify-center"
-              >
-                Buat Plan Baru
-              </Button>
-            </div>
+            <Button
+              variant="slate"
+              leftIcon={Plus}
+              leftIconClassName="h-5 w-5"
+              className="flex w-full h-full justify-center"
+            >
+              Buat Plan Baru
+            </Button>
           </div>
         </div>
       </div>
