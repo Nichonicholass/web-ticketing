@@ -102,6 +102,7 @@
   },
   "javascript": {
     "formatter": {
+      "enabled": true,
       "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded",
       "trailingCommas": "all",

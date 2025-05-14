@@ -9,11 +9,19 @@ export enum TypographyVariant {
   h4,
   h5,
   h6,
+  t,
   p,
+  bt,
+  btn,
+  c1,
+  c2,
 }
 
 enum FontVariant {
   Inter,
+  Poppins,
+  DaggerSquare,
+  ArgentumSans,
 }
 
 enum FontWeight {
@@ -53,16 +61,22 @@ export default function Typography<T extends React.ElementType>({
       className={clsxm(
         // *=============== Font Type ==================
         "text-black",
+        // [
+        // font === "Inter" && [
+        //   "font-inter",
         [
-          font === "Inter" && [
-            "font-inter",
-            [
-              weight === "regular" && "font-normal",
-              weight === "medium" && "font-medium",
-              weight === "bold" && "font-bold",
-            ],
-          ],
+          font === "Inter" && "font-inter",
+          font === "Poppins" && "font-Poppins",
+          font === "DaggerSquare" && "font-DaggerSquare",
+          font === "ArgentumSans" && "font-ArgentumSans",
         ],
+        [
+          weight === "regular" && "font-normal",
+          weight === "medium" && "font-medium",
+          weight === "bold" && "font-bold",
+        ],
+        // ],
+        // ],
         // *=============== Font Variants ==================
         [
           variant === "h1" && ["md:text-[80px] md:leading-[96px]"],
@@ -71,7 +85,13 @@ export default function Typography<T extends React.ElementType>({
           variant === "h4" && ["md:text-[48px] md:leading-[64px]"],
           variant === "h5" && ["md:text-[32px] md:leading-[48px]"],
           variant === "h6" && ["md:text-[24px] md:leading-[32px]"],
+          variant === "t" && ["md:text-[20px] md:leading-[24px]"],
+
           variant === "p" && ["md:text-[18px] md:leading-[24px]"],
+          variant === "bt" && ["md:text-[16px] md:leading-[24px]"],
+          variant === "btn" && ["md:text-[16px] md:leading-[24px]"],
+          variant === "c1" && ["md:text-[14px] md:leading-[24px]"],
+          variant === "c2" && ["md:text-[12px] md:leading-[24px]"],
         ],
         className,
       )}

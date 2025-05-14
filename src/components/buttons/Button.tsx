@@ -1,3 +1,4 @@
+import { LucideIcon } from "lucide-react";
 import * as React from "react";
 import { IconType } from "react-icons";
 import { ImSpinner } from "react-icons/im";
@@ -11,6 +12,7 @@ const ButtonVariant = [
   "red",
   "outline",
   "ghost",
+  "slate",
 ] as const;
 const ButtonSize = ["sm", "base", "lg"] as const;
 
@@ -18,8 +20,8 @@ type ButtonProps = {
   isLoading?: boolean;
   variant?: (typeof ButtonVariant)[number];
   size?: (typeof ButtonSize)[number];
-  leftIcon?: IconType;
-  rightIcon?: IconType;
+  leftIcon?: IconType | LucideIcon;
+  rightIcon?: IconType | LucideIcon;
   leftIconClassName?: string;
   rightIconClassName?: string;
 } & React.ComponentPropsWithRef<"button">;
@@ -103,9 +105,17 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               "disabled:bg-yellow-700",
               "focus-visible:ring-yellow-400",
             ],
+            variant === "slate" && [
+              "bg-slate-900 text-white",
+              "border border-slate-500",
+              "hover:bg-slate-600 hover:text-white",
+              "active:bg-slate-700",
+              "disabled:bg-slate-700",
+              "focus-visible:ring-slate-400",
+            ],
             variant === "outline" && [
               "text-black",
-              "border border-gray-300",
+              "border border-gray-500",
               "hover:bg-slate-200 focus-visible:ring-gray-400 active:bg-slate-500 disabled:bg-slate-500",
             ],
             variant === "ghost" && [
