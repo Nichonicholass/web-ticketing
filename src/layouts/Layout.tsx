@@ -1,17 +1,22 @@
 import Footer from "@/layouts/Footer";
 import Navbar from "@/layouts/Navbar";
-import { LayoutProps } from "@/types/layout";
 
-export default function Layout({
+export default function MainLayout({
   children,
-  withFooter,
   withNavbar,
-}: LayoutProps) {
+  withFooter,
+  className,
+}: {
+  children: React.ReactNode;
+  withNavbar: boolean;
+  withFooter: boolean;
+  className?: string;
+}) {
   return (
-    <>
+    <main className={className}>
       {withNavbar && <Navbar />}
       {children}
       {withFooter && <Footer />}
-    </>
+    </main>
   );
 }
