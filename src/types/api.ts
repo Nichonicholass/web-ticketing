@@ -24,6 +24,11 @@ export type ApiError = {
   code: number;
   status: boolean | number;
   message: string;
+  error: {
+    Message: string;
+    StatusCode: number;
+    ErrorCode: string;
+  };
 };
 
 export type UninterceptedApiError = {

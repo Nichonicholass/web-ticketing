@@ -6,14 +6,15 @@ import { HiEye, HiEyeOff } from "react-icons/hi";
 import Typography from "@/components/Typography";
 import ErrorMessage from "@/components/form/ErrorMessage";
 import HelperText from "@/components/form/HelperText";
-import LabelText from "@/components/form/LabelText";
 import clsxm from "@/lib/clsxm";
+import LabelText from "./LabelText";
 
 export type InputProps = {
   id: string;
   label?: string;
   helperText?: React.ReactNode;
   helperTextClassName?: string;
+  labelTextClassName?: string;
   hideError?: boolean;
   validation?: RegisterOptions;
   prefix?: string;
@@ -22,6 +23,7 @@ export type InputProps = {
   leftIcon?: IconType;
   rightIconClassName?: string;
   leftIconClassName?: string;
+  labelTextClasname?: string;
 } & React.ComponentPropsWithoutRef<"input">;
 
 export default function Input({
@@ -39,6 +41,7 @@ export default function Input({
   leftIcon: LeftIcon,
   rightIconClassName,
   leftIconClassName,
+  labelTextClassName,
   helperTextClassName,
   ...rest
 }: InputProps) {
@@ -53,7 +56,10 @@ export default function Input({
   return (
     <div className="w-full space-y-2">
       {label && (
-        <LabelText required={validation?.required ? true : false}>
+        <LabelText
+          required={validation?.required ? true : false}
+          labelTextClassname={labelTextClassName}
+        >
           {label}
         </LabelText>
       )}
@@ -61,14 +67,14 @@ export default function Input({
       <div className="relative flex w-full gap-0">
         <div
           className={clsxm(
-            "pointer-events-none absolute h-full w-full rounded-md border-gray-300 ring-1 ring-inset ring-gray-500",
+            "pointer-events-none absolute h-full w-full rounded-md border-typo-outline-1 ring-1 ring-inset ring-typo-outline-1",
           )}
         />
 
         {prefix && (
           <Typography
-            variant="p"
-            className="flex w-min items-center rounded-l-md border-r bg-slate-50 px-3 text-sm text-gray-600"
+            variant="c1"
+            className="flex w-min items-center rounded-l-md bg-transparent px-3 text-sm text-typo-outline-1"
           >
             {prefix}
           </Typography>
@@ -86,7 +92,7 @@ export default function Input({
               className={clsxm(
                 "absolute left-0 top-0 h-full",
                 "flex items-center justify-center pl-2.5",
-                "text-lg text-gray-900 md:text-xl",
+                "text-lg text-typo-main md:text-xl",
                 leftIconClassName,
               )}
             >
@@ -104,16 +110,16 @@ export default function Input({
             readOnly={readOnly}
             disabled={readOnly}
             className={clsxm(
-              "h-full w-full rounded-md border border-gray-500 px-3 py-2.5 caret-gray-900",
+              "h-full w-full rounded-md border border-typo-outline-1 px-3 py-2.5",
               [LeftIcon && "pl-9", RightIcon && "pr-9"],
-              "focus:outline-1 focus:outline-gray-900 focus:ring-inset",
-              "bg-slate-50 text-sm",
-              "hover:ring-1 hover:ring-inset hover:ring-gray-900",
-              "placeholder:text-sm placeholder:text-gray-500",
-              "text-gray-900",
+              "focus:outline-1 focus:outline-info-main focus:ring-inset",
+              "bg-typo-white text-sm",
+              "hover:ring-1 hover:ring-inset hover:ring-typo-main",
+              "placeholder:text-sm placeholder:text-typo-outline-1",
+              "text-typo-main",
               readOnly && "cursor-not-allowed",
               error &&
-                "border-none ring-2 ring-inset ring-red-500 placeholder:text-gray-500 focus:ring-red-500",
+                "border-none ring-2 ring-inset ring-danger-main placeholder:text-typo-outline-1 focus:ring-danger-main",
               prefix && "rounded-l-none rounded-r-md ",
               suffix && "rounded-l-md rounded-r-none",
               prefix && suffix && "rounded-none",
@@ -128,7 +134,7 @@ export default function Input({
               className={clsxm(
                 "absolute bottom-0 right-0 h-full",
                 "flex items-center justify-center pr-2.5",
-                "text-lg text-gray-900 md:text-xl",
+                "text-lg text-typo-main md:text-xl",
                 rightIconClassName,
               )}
             >
@@ -141,7 +147,7 @@ export default function Input({
               className={clsxm(
                 "absolute bottom-0 right-0 h-full",
                 "flex items-center justify-center pr-3",
-                "text-lg text-gray-900 md:text-xl",
+                "text-lg text-typo-outline-1 md:text-xl cursor-pointer",
                 rightIconClassName,
               )}
               onClick={() => setShowPassword(!showPassword)}
@@ -153,8 +159,8 @@ export default function Input({
 
         {suffix && (
           <Typography
-            variant="p"
-            className="flex w-min items-center rounded-r-md border-l bg-slate-50 px-3 text-sm text-gray-600"
+            variant="c1"
+            className="flex w-min items-center rounded-r-md border-l bg-typo-white px-3 text-sm text-typo-outline-1"
           >
             {suffix}
           </Typography>
@@ -163,7 +169,12 @@ export default function Input({
 
       {!hideError && error && <ErrorMessage>{error.message}</ErrorMessage>}
       {helperText && (
-        <HelperText helperTextClassName={helperTextClassName}>
+        <HelperText
+          helperTextClassName={clsxm(
+            helperTextClassName,
+            !hideError && error && "text-danger-main",
+          )}
+        >
           {helperText}
         </HelperText>
       )}

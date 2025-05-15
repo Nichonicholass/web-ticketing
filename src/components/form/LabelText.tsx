@@ -5,22 +5,22 @@ import clsxm from "@/lib/clsxm";
 
 export default function LabelText({
   children,
-  labelTextClasname,
+  labelTextClassname,
   required,
 }: {
   children: ReactNode;
-  labelTextClasname?: string;
+  labelTextClassname?: string;
   required?: boolean;
 }) {
   return (
     <label>
       <Typography
         as="p"
-        variant="p"
+        variant="bt"
         weight="bold"
-        className={clsxm("text-xs text-gray-900", labelTextClasname)}
+        className={clsxm("text-xs text-typo-main", labelTextClassname)}
       >
-        {children} {required && <span className="text-red-500">*</span>}
+        {children} {required && <span className="text-danger-main">*</span>}
       </Typography>
     </label>
   );

@@ -6,8 +6,8 @@ export default function ErrorMessage({ children }: { children: string }) {
       <Typography
         as="p"
         weight="regular"
-        variant="p"
-        className="text-xs !leading-tight text-red-500"
+        variant="c1"
+        className="text-xs !leading-tight text-danger-main"
       >
         {children}
       </Typography>

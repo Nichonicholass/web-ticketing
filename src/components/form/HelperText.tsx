@@ -14,11 +14,11 @@ export default function HelperText({
     <div className="flex space-x-1">
       <Typography
         as="p"
-        font="Inter"
+        font="Poppins"
         weight="regular"
-        variant="p"
+        variant="c1"
         className={clsxm(
-          "text-xs !leading-tight text-gray-900",
+          "text-xs !leading-tight text-typo-main",
           helperTextClassName,
         )}
       >
