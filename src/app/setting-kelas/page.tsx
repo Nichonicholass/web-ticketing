@@ -3,12 +3,12 @@
 import NextImage from "@/components/NextImage";
 import Typography from "@/components/Typography";
 import Button from "@/components/buttons/Button";
+import withAuth from "@/components/hoc/withAuth";
 import MainLayout from "@/layouts/Layout";
 import { Plus, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import TambahKelasModal from "./components/AddModal";
 import CardSetting from "./components/CardSetting";
-// import withAuth from "@/components/hoc/withAuth";
 
 type ClassItem = {
   id: string;
@@ -18,9 +18,8 @@ type ClassItem = {
   description?: string;
 };
 
-// TO DO : pakai WITHAUTH
-// export default withAuth(SettingKelas, "user")
-export default function SettingKelas() {
+export default withAuth(SettingKelas, "user");
+function SettingKelas() {
   const [open, setOpen] = useState(false);
   //   === DUMMY DATA ===
   const [classes] = useState<ClassItem[]>([

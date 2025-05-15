@@ -3,16 +3,15 @@
 import Typography from "@/components/Typography";
 import Button from "@/components/buttons/Button";
 import Input from "@/components/form/Input";
+import withAuth from "@/components/hoc/withAuth";
 import UnstyledLink from "@/components/links/UnstyledLink";
 import { REG_EMAIL, REG_PASSWORD, REG_PHONE } from "@/constant/regex";
 import { RegisterRequest } from "@/types/register";
 import { FormProvider, useForm } from "react-hook-form";
 import { useRegisterMutation } from "../hooks/mutation";
-// import withAuth from "@/components/hoc/withAuth";
 
-// TO DO : pakai WITHAUTH
-// export default withAuth(RegisterForm, "public")
-export default function RegisterForm() {
+export default withAuth(RegisterForm, "public");
+function RegisterForm() {
   //#region  //*=========== Form ===========
   const methods = useForm<RegisterRequest>({
     mode: "onTouched",

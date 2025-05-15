@@ -4,13 +4,13 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as React from "react";
 import { toast } from "react-hot-toast";
 
-import useAuthStore from "@/app/stores/useAuthStore";
 import api from "@/lib/api";
 import { getToken, removeToken } from "@/lib/cookies";
+import useAuthStore from "@/stores/useAuthStore";
 import type { ApiResponse } from "@/types/api";
 import { User } from "@/types/entities/user";
 
-const ROLE = ["admin", "user"] as const;
+const ROLE = ["super_admin", "user"] as const;
 
 type Role = (typeof ROLE)[number];
 
@@ -18,6 +18,7 @@ export interface WithAuthProps {
   user: User;
 }
 
+const USER_ROUTE = "/dashboard";
 const LOGIN_ROUTE = "/login";
 
 export enum RouteRole {
@@ -113,6 +114,8 @@ export default function withAuth<T>(
           if (routeRole === "public") {
             if (redirect) {
               router.replace(redirect as string);
+            } else {
+              router.replace(USER_ROUTE);
             }
           }
         } else if (routeRole !== "public") {
@@ -129,8 +132,11 @@ export default function withAuth<T>(
       (isLoading || !isAuthenticated) &&
       routeRole !== "public" &&
       routeRole !== "optional"
-    )
-      return <Component {...(props as T)} user={user} />;
+    ) {
+      return <div>loading</div>;
+    }
+
+    return <Component {...(props as T)} user={user} />;
   }
 
   return ComponentWithAuth;
