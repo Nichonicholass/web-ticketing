@@ -2,18 +2,29 @@
 
 import { ChevronDown, Menu } from "lucide-react";
 import Link from "next/link";
-import { notFound } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Typography from "@/components/Typography";
 import Button from "@/components/buttons/Button";
 import clsx from "@/lib/clsxm";
+import useAuthStore from "@/stores/useAuthStore";
+import useGetAllWorkspace from "./hook/useGetAllWorkspace";
 
-export default function Navbar() {
+export default function Navbar({ workspaceId }: { workspaceId?: string }) {
   const [isActive, setIsActive] = useState(false);
   const [isSubmenuOpen, setIsSubmenuOpen] = useState(false);
+  const [workspaceName, setWorkspaceName] = useState<string>("My Workspace");
+  const logout = useAuthStore.useLogout();
+  const { data: workspaces } = useGetAllWorkspace();
 
-  if (typeof window === "undefined") return notFound();
+  useEffect(() => {
+    if (workspaceId && workspaces) {
+      const found = workspaces.find((ws) => ws.id === workspaceId);
+      if (found) {
+        setWorkspaceName(found.name);
+      }
+    }
+  }, [workspaceId, workspaces]);
 
   return (
     <>
@@ -31,18 +42,10 @@ export default function Navbar() {
         onClick={() => isSubmenuOpen && setIsSubmenuOpen(false)}
       >
         {/* Logo */}
-        <Link href="/" className=" ">
+        <Link href="/dashboard" className=" ">
           <Typography variant="t" weight="bold" className="text-slate-900">
             DASHBOARD
           </Typography>
-          {/* TO DO : PROFILE */}
-          {/* <NextImage
-            src="/logo/logo-only.png"
-            width={381}
-            height={558}
-            alt="footer-logo"
-            className="w-full"
-          /> */}
         </Link>
 
         {/* Menu Utama */}
@@ -55,18 +58,21 @@ export default function Navbar() {
           )}
         >
           {/* My Workspace Dropdown */}
+
           <div className="relative flex flex-col mt-0 items-start lg:w-fit max-md:mb-4">
             <Button
               variant="outline"
               className="group flex items-center space-x-2"
-              onClick={() => setIsSubmenuOpen((prev) => !prev)}
+              onClick={() => {
+                setIsSubmenuOpen((prev) => !prev);
+              }}
             >
               <Typography
                 variant="btn"
                 weight="medium"
                 className="text-secondary-500 transition duration-200 group-hover:text-secondary-400"
               >
-                My Workspace
+                {workspaceName}
               </Typography>
               <ChevronDown className="text-secondary-500 group-hover:text-secondary-400 transition duration-200" />
             </Button>
@@ -78,28 +84,33 @@ export default function Navbar() {
                 !isSubmenuOpen && "hidden",
               )}
             >
-              <Link href="/workspace">
+              {workspaces?.map((workspace) => (
+                // <Link href={`/workspace/${workspace.id}`} key={workspace.id}>
                 <Typography
                   variant="btn"
                   weight="medium"
                   className="block rounded-md px-3 py-2 text-left transition duration-200 hover:bg-slate-200"
                 >
-                  Workspace 1
+                  {workspace.name}
                 </Typography>
-              </Link>
-              <Link href="/workspace">
-                <Typography
-                  variant="btn"
-                  weight="medium"
-                  className="block rounded-md px-3 py-2 text-left transition duration-200 hover:bg-slate-200"
-                >
-                  Workspace 2
-                </Typography>
-              </Link>
+                // </Link>
+              ))}
+
+              <div className="pt-2 border-t border-slate-200">
+                <Link href="/workspace">
+                  <Typography
+                    variant="btn"
+                    weight="semibold"
+                    className="block rounded-md px-3 py-2 text-left text-primary-600 hover:bg-slate-300 transition duration-200"
+                  >
+                    + Buat Workspace
+                  </Typography>
+                </Link>
+              </div>
             </div>
           </div>
 
-          <Link href="/planning-kelas" onClick={() => setIsActive(false)}>
+          <Link href="/planning" onClick={() => setIsActive(false)}>
             <Typography
               variant="btn"
               weight="medium"
@@ -109,7 +120,7 @@ export default function Navbar() {
             </Typography>
           </Link>
 
-          <Link href="/" onClick={() => setIsActive(false)}>
+          <Link href="/setting-kelas" onClick={() => setIsActive(false)}>
             <Typography
               variant="btn"
               weight="medium"
@@ -119,7 +130,7 @@ export default function Navbar() {
             </Typography>
           </Link>
 
-          <Link href="/" onClick={() => setIsActive(false)}>
+          <Link href="/tambah-teman" onClick={() => setIsActive(false)}>
             <Typography
               variant="btn"
               weight="medium"
@@ -135,6 +146,13 @@ export default function Navbar() {
           className="block h-8 w-8 cursor-pointer transition duration-200 hover:text-default-800 lg:hidden"
           onClick={() => setIsActive((prev) => !prev)}
         />
+        <Button
+          variant="red"
+          className="group flex items-center space-x-2"
+          onClick={logout}
+        >
+          Logout
+        </Button>
       </section>
     </>
   );
