@@ -35,7 +35,7 @@ function ClassSettingCard({
       <CardFooter className="flex justify-between mt-6">
         <Button
           size="sm"
-          className="bg-slate-900 border-slate-900 px-[32px] py-[8px] hover:bg-slate-800 active:bg-slate-700 bg-[#1E1E2F]"
+          className="bg-slate-900 border-slate-900 px-[32px] py-[8px] hover:bg-slate-800 active:bg-slate-700"
           onClick={() => {
             router.push(`${redirectTo}`);
           }}
