@@ -4,8 +4,8 @@ import { Input } from "./components/input";
 import { Button } from "./components/button";
 import { Search } from "lucide-react";
 import Navbar from "@/layouts/Navbar";
-import { ConfirmationModal } from "./Modal/page";
-import { FriendCard } from "./Card/page";
+import { ConfirmationModal } from "./Modal/Modal";
+import Card from "./Card/Card";
 
 interface Friend {
   id: string;
@@ -131,10 +131,11 @@ export default function WorkshopFriendsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-2 sm:px-0">
             {filteredFriends.map((friend) => (
-              <FriendCard
-                key={friend.id}
-                friend={friend}
-                onDelete={handleDeleteConfirmation}
+              <Card
+                onDelete={() => handleDeleteConfirmation("")}
+                name={friend.name}
+                id={friend.id}
+                username={friend.username}
               />
             ))}
           </div>

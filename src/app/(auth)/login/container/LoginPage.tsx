@@ -14,7 +14,6 @@ import LabelText from "@/components/form/LabelText";
 export default withAuth(LoginPage, "public");
 function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
   const [activeInput, setActiveInput] = useState<"email" | "password" | null>(
     null,
   );
