@@ -3,7 +3,6 @@
 import Button from "@/components/buttons/Button";
 import Typography from "@/components/Typography";
 import ClassSettingCard from "@/app/dashboard/components/ClassSettingCard";
-import SearchInput from "@/components/ui/search-input";
 import MainLayout from "@/layouts/Layout";
 import { useRouter } from "next/navigation";
 import { FiPlus } from "react-icons/fi";
@@ -30,11 +29,12 @@ function Dashboard() {
 
   // === FILTER FUNCTION
   const filteredClassesSettingPrivate = useMemo(() => {
-    if (!searchTerm) return allClassSettingPrivate;
-    return allClassSettingPrivate?.filter((cls) =>
-      cls.name.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-  }, [allClassSettingPrivate, searchTerm]);
+    return allClassSettingPrivate
+      ?.filter((cls) => cls.permission === "PRIVATE")
+      ?.filter((cls) =>
+        cls.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      );
+  }, [allClassSetting, searchTerm]);
 
   return (
     <MainLayout withNavbar withFooter={false}>
@@ -69,28 +69,26 @@ function Dashboard() {
           </Button>
         </div>
 
-        {/* SETTING KELASMU */}
+        {/* PRIORITY PLAN */}
         <Typography variant="h5" className="font-bold mb-3 text-3xl">
-          Setting Kelasmu!
+          Priority Plan Kamu!
         </Typography>
 
         <div className="flex flex-wrap gap-4">
-          {isLoadingClassSettingPrivate && (
-            <div className="flex justify-center items-center h-full w-full text-gray-500">
-              Loading...
-            </div>
-          )}
-          {filteredClassesSettingPrivate?.map((classItem) => (
-            <ClassSettingCard
-              key={classItem.id}
-              title={classItem.name}
-              description={classItem.name}
-              buttonText="Setting Kelas"
-              redirectTo="/setting-kelas"
-            />
-          ))}
-          {filteredClassesSettingPrivate?.length === 0 && (
-            <div className="text-center py-4 text-gray-500">
+          {isLoadingClassSettingPrivate ? (
+            <div className="text-gray-500">Loading...</div>
+          ) : (filteredClassesSettingPrivate ?? []).length > 0 ? (
+            (filteredClassesSettingPrivate ?? []).map((classItem) => (
+              <ClassSettingCard
+                key={classItem.id}
+                title={classItem.name}
+                description={classItem.name}
+                buttonText="Lihat Plan"
+                redirectTo="/plan-detail"
+              />
+            ))
+          ) : (
+            <div className="text-center py-4 text-gray-500 w-full">
               Tidak ada kelas yang ditemukan
             </div>
           )}
