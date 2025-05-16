@@ -17,3 +17,12 @@ export type GetAllClassSettingResponse = {
     sort_by: string;
   }[];
 };
+
+export type GetMeResponse = {
+  personal_info: {
+    id: string;
+    username: string;
+    email: string;
+    phone_number: string;
+  };
+};
