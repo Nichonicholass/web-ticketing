@@ -4,12 +4,18 @@ import Typography from "@/components/Typography";
 import Button from "@/components/buttons/Button";
 import IconButton from "@/components/buttons/IconButton";
 import ConfirmModal from "@/components/modal/ConfirmModal";
-import { CardProps } from "@/types/planning/card";
+import { CardPlanProps } from "@/types/planning/plan";
 import { Trash2 } from "lucide-react";
 import React, { useState } from "react";
+import { useDeletePlanMutation } from "../hooks/mutation";
 
-const CardPlanning: React.FC<CardProps> = ({ name, departement }) => {
+const CardPlanning: React.FC<CardPlanProps> = ({ name, id }) => {
   const [openDelete, setOpenDelete] = useState(false);
+
+  const { mutate: deletePlan } = useDeletePlanMutation();
+  const handleDelete = (planId: string) => {
+    deletePlan(planId);
+  };
 
   return (
     <div
@@ -39,10 +45,8 @@ const CardPlanning: React.FC<CardProps> = ({ name, departement }) => {
           cancelbutton="Batal"
           acceptbutton="Ya, Yakin"
           variant="red"
+          onConfirm={() => handleDelete(id)}
         />
-
-        {/* === DOSEN === */}
-        <p className="text-gray-900 mb-2">{departement}</p>
 
         {/* Tombol/Aksi */}
         <Button variant="slate" className="mt-4">
