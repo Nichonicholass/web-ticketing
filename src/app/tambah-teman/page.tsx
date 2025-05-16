@@ -64,7 +64,7 @@ export default function WorkshopFriendsPage() {
   const filteredFriends = friends.filter(
     (friend) =>
       friend.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      friend.username.toLowerCase().includes(searchQuery.toLowerCase())
+      friend.username.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
