@@ -8,11 +8,14 @@ import { CardPlanProps } from "@/types/planning/plan";
 import { Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import { useDeletePlanMutation } from "../hooks/mutation";
+import { useRouter } from "next/navigation"; // Import useRouter
 
 const CardPlanning: React.FC<CardPlanProps> = ({ name, id }) => {
   const [openDelete, setOpenDelete] = useState(false);
 
   const { mutate: deletePlan } = useDeletePlanMutation();
+  const router = useRouter(); // Inisialisasi router
+
   const handleDelete = (planId: string) => {
     deletePlan(planId);
   };
@@ -27,7 +30,7 @@ const CardPlanning: React.FC<CardPlanProps> = ({ name, id }) => {
     >
       {/* === CARD === */}
       <div className="p-6 relative">
-        {/* === TITTLE === */}
+        {/* === TITLE === */}
         <h3 className="text-xl font-bold  text-black">{name}</h3>
         <IconButton
           variant="ghost"
@@ -49,7 +52,11 @@ const CardPlanning: React.FC<CardPlanProps> = ({ name, id }) => {
         />
 
         {/* Tombol/Aksi */}
-        <Button variant="slate" className="mt-4">
+        <Button
+          variant="slate"
+          className="mt-4"
+          onClick={() => router.push(`/planning/add/${id}`)}
+        >
           <Typography
             font="Poppins"
             variant="c1"
