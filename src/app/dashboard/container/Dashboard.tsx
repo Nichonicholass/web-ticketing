@@ -113,7 +113,7 @@ function Dashboard() {
                 title={classItem.name}
                 description={classItem.name}
                 buttonText="Lihat Plan"
-                redirectTo="/plan-detail"
+                redirectTo={`/planning/add/${classItem.id}`}
               />
             ))}
           </div>
