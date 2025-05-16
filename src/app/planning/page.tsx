@@ -9,6 +9,7 @@ import TambahPlanModal from "./components/AddModal";
 import { usePlansByWorkspaceQuery, useWorkspaceQuery } from "./hooks/mutation";
 import MainLayout from "@/layouts/Layout";
 import Navbar from "@/layouts/Navbar";
+import NextImage from "@/components/NextImage";
 
 export default function PlanningKelas() {
   const [open, setOpen] = useState(false);
@@ -76,7 +77,7 @@ export default function PlanningKelas() {
                 <input
                   type="text"
                   className="block min-w-[592px] w-full pl-10 pr-3 py-2 mb-4 text-black border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                  placeholder="Cari kelas..."
+                  placeholder="Cari Plan..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
