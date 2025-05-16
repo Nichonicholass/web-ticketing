@@ -6,15 +6,17 @@ export default function MainLayout({
   withNavbar,
   withFooter,
   className,
+  workspaceId,
 }: {
   children: React.ReactNode;
   withNavbar: boolean;
   withFooter: boolean;
   className?: string;
+  workspaceId?: string;
 }) {
   return (
     <main className={className}>
-      {withNavbar && <Navbar />}
+      {withNavbar && <Navbar workspaceId={workspaceId} />}
       {children}
       {withFooter && <Footer />}
     </main>
