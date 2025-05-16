@@ -9,45 +9,47 @@ import { Plus, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import TambahKelasModal from "./components/AddModal";
 import CardSetting from "./components/CardSetting";
+import useGetAllClass from "./hook/useGetAllClass";
 
 type ClassItem = {
   id: string;
   name: string;
   dosen: string;
   date: string;
-  description?: string;
+  classroom: string;
 };
 
 export default withAuth(SettingKelas, "user");
 function SettingKelas() {
+  const { data: dataAllClass } = useGetAllClass();
+
   const [open, setOpen] = useState(false);
-  //   === DUMMY DATA ===
-  const [classes] = useState<ClassItem[]>([
-    {
-      id: "1",
-      name: "PWEB F",
-      dosen: "Ir. M.M. Irfan Subakti, S.Kom., M.Sc.Eng., M.Phil., IPM ",
-      date: "Kamis, 13.00 -15.00",
-    },
-    {
-      id: "2",
-      name: "PWEB A",
-      dosen: "Nicho",
-      date: "Kamis, 13.00 -15.00",
-    },
-    {
-      id: "3",
-      name: "Chemistry Basics",
-      dosen: "Sadam",
-      date: "Kamis, 13.00 -15.00",
-    },
-    {
-      id: "4",
-      name: "Biology Fundamentals",
-      dosen: "Rayhan",
-      date: "Kamis, 13.00 -15.00",
-    },
-  ]);
+  //   === HANDLE DATA ===
+  const classes: ClassItem[] = useMemo(() => {
+    if (!dataAllClass) return [];
+    return dataAllClass.map((item) => {
+      const start = item.start_time.slice(0, 5);
+      const end = item.end_time.slice(0, 5);
+
+      const dayMap: Record<string, string> = {
+        monday: "Senin",
+        tuesday: "Selasa",
+        wednesday: "Rabu",
+        thursday: "Kamis",
+        friday: "Jumat",
+        saturday: "Sabtu",
+        sunday: "Minggu",
+      };
+
+      return {
+        id: item.id,
+        name: item.name, // atau nama course kalau kamu punya relasi
+        dosen: item.lecturer,
+        classroom: item.classroom,
+        date: `${dayMap[item.day] || item.day}, ${start} - ${end}`,
+      };
+    });
+  }, [dataAllClass]);
 
   const [searchTerm, setSearchTerm] = useState("");
 

@@ -19,6 +19,7 @@ type TambahKelasModalProps = {
   acceptbutton: string;
   cancelbutton: string;
   variant?: "default" | "red";
+  onConfirm?: () => void;
 };
 
 export default function ConfirmModal({
@@ -29,6 +30,7 @@ export default function ConfirmModal({
   cancelbutton,
   acceptbutton,
   variant = "default",
+  onConfirm,
 }: TambahKelasModalProps) {
   const titleColorClass = variant === "red" ? "text-red-500" : "text-slate-900";
   const acceptButtonVariant = variant === "red" ? "red" : "slate";
@@ -54,7 +56,11 @@ export default function ConfirmModal({
           <Button variant="outline" className="w-full">
             {cancelbutton}
           </Button>
-          <Button variant={acceptButtonVariant} className="w-full">
+          <Button
+            variant={acceptButtonVariant}
+            className="w-full"
+            onClick={onConfirm}
+          >
             {acceptbutton}
           </Button>
         </div>

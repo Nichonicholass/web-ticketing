@@ -5,11 +5,20 @@ import ConfirmModal from "@/components/modal/ConfirmModal";
 import { CardProps } from "@/types/setting-kelas/card";
 import { Trash2 } from "lucide-react";
 import React, { useState } from "react";
+import { useDeleteClassMutation } from "../hook/useDeleteClass";
 import EditKelasModal from "./EditModal";
 
-const CardSetting: React.FC<CardProps> = ({ name, dosen, date }) => {
+const CardSetting: React.FC<CardProps> = ({
+  id,
+  name,
+  dosen,
+  date,
+  classroom,
+}) => {
   const [open, setOpen] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
+
+  const { mutate: deleteClass } = useDeleteClassMutation();
 
   return (
     <div
@@ -39,10 +48,15 @@ const CardSetting: React.FC<CardProps> = ({ name, dosen, date }) => {
           cancelbutton="Batal"
           acceptbutton="Ya, Yakin"
           variant="red"
+          onConfirm={() => {
+            deleteClass(id);
+          }}
+          // isLoading={deleting}
         />
 
         {/* === DOSEN === */}
         <p className="text-gray-900 mb-2">{dosen}</p>
+        <p className="text-gray-900 mb-2">{classroom}</p>
 
         {/* === DATE === */}
         <div className="mb-6">
@@ -56,7 +70,7 @@ const CardSetting: React.FC<CardProps> = ({ name, dosen, date }) => {
           </Typography>
         </div>
 
-        {/* Tombol/Aksi */}
+        {/* ACTION BUTTON === */}
         <Button
           variant="slate"
           onClick={() => {
@@ -72,7 +86,7 @@ const CardSetting: React.FC<CardProps> = ({ name, dosen, date }) => {
             Edit Kelas
           </Typography>
         </Button>
-        <EditKelasModal open={open} setOpen={setOpen} />
+        <EditKelasModal open={open} setOpen={setOpen} classId={id} />
       </div>
     </div>
   );
