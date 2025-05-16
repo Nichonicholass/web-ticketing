@@ -24,12 +24,14 @@ function ClassDetail() {
           name: "PWEB F",
           dosen: "Ir. M.M. Irfan Subakti, S.Kom., M.Sc.Eng., M.Phil., IPM",
           date: "Senin, 08.00 - 10.00",
+          status: "on_plan",
         },
         {
           id: "2",
           name: "ASD A",
           dosen: "Dr. Eng. Mochamad Hariadi, S.T., M.Sc.",
           date: "Senin, 10.00 - 12.00",
+          status: "not_plan",
         },
       ],
     },
@@ -41,12 +43,14 @@ function ClassDetail() {
           name: "Basis Data M",
           dosen: "Dr. Riza Satria Perdana, S.Kom., M.T.",
           date: "Selasa, 13.00 - 15.00",
+          status: "not_plan",
         },
         {
           id: "4",
           name: "Matematika Diskrit C",
           dosen: "Dr. Fitri Utaminingrum, S.Si., M.Si.",
           date: "Selasa, 15.00 - 17.00",
+          status: "not_plan",
         },
       ],
     },
@@ -58,6 +62,7 @@ function ClassDetail() {
           name: "Sistem Operasi B",
           dosen: "Dr. T.A. Fauzi, S.Kom., M.Comp.Sc.",
           date: "Rabu, 09.00 - 11.00",
+          status: "not_plan",
         },
       ],
     },
@@ -69,6 +74,7 @@ function ClassDetail() {
           name: "Sistem Operasi F",
           dosen: "Dr. T.A. Fauzi, S.Kom., M.Comp.Sc.",
           date: "Rabu, 09.00 - 11.00",
+          status: "not_plan",
         },
       ],
     },
@@ -80,6 +86,7 @@ function ClassDetail() {
           name: "Sistem Operasi A",
           dosen: "Dr. T.A. Fauzi, S.Kom., M.Comp.Sc.",
           date: "Rabu, 09.00 - 11.00",
+          status: "not_plan",
         },
       ],
     },
@@ -154,15 +161,37 @@ function ClassDetail() {
                 <Typography variant="h5" className="font-bold mb-3 text-3xl">
                   {day.hari}
                 </Typography>
-                {day.plans.map((plan) => (
-                  <PlanDetailCard
-                    key={plan.id}
-                    id={plan.id}
-                    kelas={plan.name}
-                    dosen={plan.dosen}
-                    date={plan.date}
-                  />
-                ))}
+                {day.plans
+                  .filter((plan) => plan.status === "on_plan")
+                  .map((plan) => (
+                    <PlanDetailCard
+                      key={plan.id}
+                      id={plan.id}
+                      kelas={plan.name}
+                      dosen={plan.dosen}
+                      date={plan.date}
+                      status={plan.status}
+                    />
+                  ))}
+
+                {/* Show divider only if there are both on_plan and not_plan
+                {day.plans.some((p) => p.status === "on_plan") &&
+                  day.plans.some((p) => p.status !== "on_plan") && ( */}
+                <hr className="" />
+                {/* )} */}
+
+                {day.plans
+                  .filter((plan) => plan.status !== "on_plan")
+                  .map((plan) => (
+                    <PlanDetailCard
+                      key={plan.id}
+                      id={plan.id}
+                      kelas={plan.name}
+                      dosen={plan.dosen}
+                      date={plan.date}
+                      status={plan.status ?? "not_plan"} // fallback if status is undefined
+                    />
+                  ))}
               </div>
             ))}
           </div>
