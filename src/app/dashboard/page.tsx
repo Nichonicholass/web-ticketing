@@ -50,7 +50,7 @@ function Dashboard() {
             <Search className="absolute top-1/2 right-3 h-5 w-5 text-gray-400 transform -translate-y-1/2" />
             <input
               type="text"
-              className="block md:w-[450px] lg:w-[528px] w-full pl-10 pr-3 py-2 text-black border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+              className="block md:w-[450px] lg:w-[528px] w-full pl-4 pr-3 py-2 border-slate-900 bg-transparent text-black border rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none  sm:text-sm"
               placeholder="Cari kelas..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
