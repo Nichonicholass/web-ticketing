@@ -12,6 +12,7 @@ export function useUpdateClassMutation(id: string, onSuccess?: () => void) {
       return data;
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["get-all-class"] });
       queryClient.invalidateQueries({ queryKey: ["class", id] });
       if (onSuccess) onSuccess();
       toast.success("Kelas berhasil diperbarui!");
