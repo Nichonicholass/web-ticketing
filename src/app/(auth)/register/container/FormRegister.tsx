@@ -9,6 +9,7 @@ import { REG_EMAIL, REG_PASSWORD, REG_PHONE } from "@/constant/regex";
 import { RegisterRequest } from "@/types/register";
 import { FormProvider, useForm } from "react-hook-form";
 import { useRegisterMutation } from "../hooks/mutation";
+// import withAuth from "@/components/hoc/withAuth";
 
 export default withAuth(RegisterForm, "public");
 function RegisterForm() {

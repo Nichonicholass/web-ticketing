@@ -3,17 +3,23 @@ import { ReactNode } from "react";
 import Typography from "@/components/Typography";
 import clsxm from "@/lib/clsxm";
 
-export default function LabelText({
-  children,
-  labelTextClassname,
-  required,
-}: {
+type LabelTextProps = {
   children: ReactNode;
+  htmlFor?: string;
   labelTextClassname?: string;
   required?: boolean;
-}) {
+  className?: string;
+};
+
+export default function LabelText({
+  children,
+  htmlFor,
+  labelTextClassname,
+  required,
+  className,
+}: LabelTextProps) {
   return (
-    <label>
+    <label htmlFor={htmlFor} className={className}>
       <Typography
         as="p"
         variant="bt"
