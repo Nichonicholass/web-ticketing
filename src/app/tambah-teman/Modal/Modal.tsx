@@ -11,6 +11,7 @@ interface ConfirmationModalProps {
   onConfirm: () => void;
   onCancel: () => void;
   variant?: "default" | "destructive";
+  disabled?: boolean;
 }
 
 export function ConfirmationModal({
@@ -22,6 +23,7 @@ export function ConfirmationModal({
   onConfirm,
   onCancel,
   variant = "default",
+  disabled = false,
 }: ConfirmationModalProps) {
   if (!isOpen) return null;
 
@@ -38,6 +40,7 @@ export function ConfirmationModal({
               variant="outline"
               onClick={onCancel}
               className="text-slate-900 border-slate-900 hover:bg-slate-100 flex-1 py-2"
+              disabled={disabled}
             >
               {cancelText}
             </Button>
@@ -48,6 +51,7 @@ export function ConfirmationModal({
                   ? "bg-red-600 hover:bg-red-700"
                   : "bg-slate-900 hover:bg-slate-800"
               } text-white flex-1 py-2`}
+              disabled={disabled}
             >
               {confirmText}
             </Button>

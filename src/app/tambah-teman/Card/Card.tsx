@@ -1,14 +1,34 @@
-import { FriendCard } from "./components/frienCard";
+interface FriendCardProps {
+  friend: {
+    userid: string;
+    name: string;
+    username: string;
+    email?: string;
+    permission?: "EDIT" | "VIEW";
+    is_verified?: boolean;
+  };
+  onDelete: (email: string) => void;
+}
 
-type CardProps = {
-  id: string;
-  name: string;
-  username: string;
-  onDelete: () => void;
-};
-
-export default function Card({ id, name, username, onDelete }: CardProps) {
+export function FriendCard({ friend, onDelete }: FriendCardProps) {
   return (
-    <FriendCard name={name} id={id} username={username} onDelete={onDelete} />
+    <div className="border rounded-lg p-4">
+      <div className="flex justify-between items-start">
+        <div>
+          <h3 className="font-medium">{friend.name}</h3>
+          <p className="text-sm text-gray-500">@{friend.username}</p>
+          <p className="text-sm text-gray-500">{friend.email}</p>
+          <p className="text-sm mt-1">
+            Hak akses: {friend.permission === "EDIT" ? "Edit" : "View"}
+          </p>
+        </div>
+        <button
+          onClick={() => friend.email && onDelete(friend.email)}
+          className="text-red-500 hover:text-red-700 text-sm"
+        >
+          Hapus
+        </button>
+      </div>
+    </div>
   );
 }
