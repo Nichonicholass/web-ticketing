@@ -4,6 +4,11 @@ import { FormProvider, useForm } from "react-hook-form";
 import Input from "../form/Input";
 import { CiSearch } from "react-icons/ci";
 
+type SearchInputProps = {
+  searchTerm: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
 function SearchInput() {
   const methods = useForm();
 

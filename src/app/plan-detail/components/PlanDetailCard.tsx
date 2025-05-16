@@ -15,7 +15,7 @@ function PlanDetailCard() {
   const [open, setOpen] = useState(false);
 
   return (
-    <Card className="w-fit text-black rounded-[6px] pb-7 relative">
+    <Card className="w-fit text-black rounded-[6px] pb-7 relative hover:scale-105 transition-transform duration-300">
       <RxCross2
         className="text-black text-xl absolute top-4 right-3 cursor-pointer"
         onClick={() => setOpen(true)}

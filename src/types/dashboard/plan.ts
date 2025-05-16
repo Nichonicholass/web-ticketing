@@ -1,8 +1,3 @@
-export type PlanningCardProps = {
-  title: string;
-  description: string;
-};
-
 export type GetAllPlanResponse = {
   success: boolean;
   message: string;
