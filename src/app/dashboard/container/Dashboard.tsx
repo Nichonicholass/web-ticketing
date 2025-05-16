@@ -1,6 +1,6 @@
 "use client";
 
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 import Button from "@/components/buttons/Button";
 import Typography from "@/components/Typography";
 import ClassSettingCard from "@/app/dashboard/components/ClassSettingCard";
@@ -12,20 +12,46 @@ import { useMemo, useState } from "react";
 import { Search } from "lucide-react";
 import useGetAllClassSetting from "./../hooks/useGetAllClassSetting";
 import useGetMe from "./../hooks/useGetMe";
+import {
+  usePlansByWorkspaceQuery,
+  useWorkspaceQuery,
+} from "@/app/planning/hooks/mutation";
+import CardPlanning from "../components/CardPlanning";
 
 function Dashboard() {
   const router = useRouter();
 
+  const [selectedWorkspaceId, setSelectedWorkspaceId] = useState<string | null>(
+    null,
+  );
+
   // === HANDLE DATA
-  const { data: allClassSetting, isLoading: isLoadingClassSetting } =
-    useGetAllClassSetting();
   const {
     data: allClassSettingPrivate,
     isLoading: isLoadingClassSettingPrivate,
   } = useGetAllClassSetting({ isPrivate: true });
   const { data: me } = useGetMe();
 
+  const { data: plansData } = usePlansByWorkspaceQuery(
+    selectedWorkspaceId ?? "",
+  );
+
+  const classes = plansData?.data ?? [];
+
   const [searchTerm, setSearchTerm] = useState("");
+
+  const { data: workspaceListData, isLoading: isLoadingPlan } =
+    useWorkspaceQuery();
+
+  useEffect(() => {
+    const storedId = localStorage.getItem("selectedWorkspaceId");
+    if (storedId && !selectedWorkspaceId) {
+      setSelectedWorkspaceId(storedId);
+    } else if (!storedId && workspaceListData?.data?.length) {
+      setSelectedWorkspaceId(workspaceListData.data[0].id);
+      localStorage.setItem("selectedWorkspaceId", workspaceListData.data[0].id);
+    }
+  }, [workspaceListData, selectedWorkspaceId]);
 
   // === FILTER FUNCTION
   const filteredClassesSettingPrivate = useMemo(() => {
@@ -102,26 +128,20 @@ function Dashboard() {
           </Typography>
 
           <div className="flex flex-wrap gap-4">
-            {isLoadingClassSetting && (
+            {isLoadingPlan && (
               <div className="flex justify-center items-center h-full w-full text-gray-500">
                 Loading...
               </div>
             )}
-            {allClassSetting?.map((classItem) => (
-              <ClassSettingCard
-                key={classItem.id}
-                title={classItem.name}
-                description={classItem.name}
-                buttonText="Lihat Plan"
-                redirectTo={`/planning/add/${classItem.id}`}
-              />
-            ))}
           </div>
 
-          {allClassSetting?.length === 0 && (
-            <div className="text-center py-4 text-gray-500">
-              Tidak ada pilihan yang tersedia
-            </div>
+          <div className="flex flex-wrap gap-10 ">
+            {classes.map((card) => (
+              <CardPlanning key={card.id} {...card} />
+            ))}
+          </div>
+          {classes.length === 0 && (
+            <div className="text-center py-4 text-gray-500 col-span-full"></div>
           )}
         </div>
       </MainLayout>
