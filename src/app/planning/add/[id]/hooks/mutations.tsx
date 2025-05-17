@@ -40,18 +40,20 @@ export const useAddPlanSetting = () => {
   return useMutation<AxiosResponse, AxiosError, AddPlanSettingPayload>({
     mutationFn: (payload) => api.post("/plans/settings", payload),
     onSuccess: () => {
-      //   toast.success("Plan setting berhasil ditambahkan!");
+      toast.success("Plan setting berhasil ditambahkan!");
       queryClient.invalidateQueries({ queryKey: ["get-plan-detail"] });
     },
     onError: (error) => {
-      //   toast.error(
-      //     error.response?.data? ??
-      //       "Gagal menambahkan plan setting, coba lagi nanti."
-      //   );
+      const errData = error.response?.data as {
+        error?: string;
+        message?: string;
+      };
+      toast.error(
+        errData?.error ?? "Gagal menambahkan plan setting, coba lagi nanti.",
+      );
     },
   });
 };
-
 export const useDeletePlanSetting = () => {
   const queryClient = useQueryClient();
 
