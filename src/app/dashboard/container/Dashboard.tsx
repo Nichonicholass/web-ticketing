@@ -88,7 +88,7 @@ function Dashboard() {
               className="bg-slate-900 border-slate-900 px-[48px] py-[8px] hover:bg-slate-800 active:bg-slate-700 h-fit "
               leftIcon={FiPlus}
               onClick={() => {
-                router.push("/add-plan");
+                router.push("/planning");
               }}
             >
               Buat Plan Baru
