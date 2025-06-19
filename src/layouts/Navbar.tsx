@@ -87,91 +87,43 @@ export default function Navbar({
               : "-top-[500px]",
           )}
         >
-          {/* My Workspace Dropdown */}
-          <div className="relative flex flex-col mt-0 items-start lg:w-fit max-md:mb-4">
-            <Button
-              variant="outline"
-              className="group flex items-center space-x-2"
-              onClick={() => {
-                setIsSubmenuOpen((prev) => !prev);
-              }}
-            >
-              <Typography
-                variant="btn"
-                weight="medium"
-                className="w-[164px] truncate text-left text-secondary-500 transition duration-200 group-hover:text-secondary-400"
-                title={workspaceName}
-              >
-                {workspaceName}
-              </Typography>
-              <ChevronDown className="text-secondary-500 group-hover:text-secondary-400 transition duration-200" />
-            </Button>
-
-            <div
-              className={clsx(
-                "mt-2 w-full space-y-2 rounded-lg bg-white p-3 shadow-md transition-all duration-200",
-                "lg:absolute lg:left-0 lg:top-12 lg:w-[250px]",
-                !isSubmenuOpen && "hidden",
-              )}
-            >
-              {workspaces?.map((workspace) => (
-                <button
-                  key={workspace.id}
-                  onClick={() => handleWorkspaceSelect(workspace.id)}
-                  className="w-full text-left"
-                >
-                  <Typography
-                    variant="btn"
-                    weight="medium"
-                    className="block rounded-md px-3 py-2 hover:bg-slate-200 transition duration-200"
-                  >
-                    {workspace.name}
-                  </Typography>
-                </button>
-              ))}
-
-              <div className="pt-2 border-t border-slate-200">
-                <Link href="/workspace">
-                  <Typography
-                    variant="btn"
-                    weight="semibold"
-                    className="block rounded-md px-3 py-2 text-left text-primary-600 hover:bg-slate-300 transition duration-200"
-                  >
-                    + Buat Workspace
-                  </Typography>
-                </Link>
-              </div>
-            </div>
-          </div>
-
           {/* Menu links */}
-          <Link href="/planning" onClick={() => setIsActive(false)}>
+          <Link href="/now-showing" onClick={() => setIsActive(false)}>
             <Typography
               variant="btn"
               weight="medium"
               className="text-slate-900 transition duration-200 hover:text-slate-600 max-md:mb-4"
             >
-              Planning Kelas
+              Now Showing
             </Typography>
           </Link>
-          <Link href="/setting-kelas" onClick={() => setIsActive(false)}>
+          <Link href="/order" onClick={() => setIsActive(false)}>
             <Typography
               variant="btn"
               weight="medium"
               className="text-slate-900 transition duration-200 hover:text-slate-600 max-md:mb-4"
             >
-              Setting Kelas
+              Order
             </Typography>
           </Link>
-          <Link href="/tambah-teman" onClick={() => setIsActive(false)}>
+          <Link href="/ticket" onClick={() => setIsActive(false)}>
             <Typography
               variant="btn"
               weight="medium"
               className="text-slate-900 transition duration-200 hover:text-slate-600 max-md:mb-4"
             >
-              Invite Teman
+              My Ticket
             </Typography>
           </Link>
+          {/* <Link href="/profile" onClick={() => setIsActive(false)}>
+            <Typography
+              variant="btn"
+              weight="medium"
+              className="text-slate-900 transition duration-200 hover:text-slate-600 max-md:mb-4"
+            >
+              Profile
+            </Typography>
+          </Link> */}
         </div>
 
         {/* Hamburger + Logout */}
