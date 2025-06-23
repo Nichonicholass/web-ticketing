@@ -1,13 +1,11 @@
 export type RegisterRequest = {
-  username: string;
-  email: string;
-  password: string;
+  name: string;
   phone_number: string;
+  password: string;
 };
 
 export type RegisterResponse = {
-  id: string;
-  username: string;
-  email: string;
+  user_id: string;
+  name: string;
   phone_number: string;
 };
